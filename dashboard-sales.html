@@ -64,6 +64,10 @@
                 </h3>
                 <form id="orderForm" class="space-y-4 text-sm">
                     <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Tanggal Transaksi</label>
+                        <input type="date" id="orderDate" required class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-blue-500 transition-all text-slate-200">
+                    </div>
+                    <div>
                         <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Nama Pelanggan / Mitra</label>
                         <input type="text" id="customer" required class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-blue-500 transition-all placeholder:text-slate-600" placeholder="Contoh: Resto Ayam Geprek">
                     </div>
@@ -173,6 +177,8 @@
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Ambil tanggal langsung dari input form
+            const chosenDate = document.getElementById('orderDate').value;
             const customerName = document.getElementById('customer').value.trim();
             const channelType = document.getElementById('channelType').value;
             const productSelect = document.getElementById('productSelect');
@@ -186,14 +192,11 @@
             
             // Generate ID Otomatis
             const newId = `SO-2026-${String(orders.length + 1).padStart(3, '0')}`;
-            
-            // Mengambil tanggal hari ini secara otomatis (Format: YYYY-MM-DD)
-            const today = new Date().toISOString().split('T')[0];
 
-            // Objek data pesanan baru (Sekarang menyertakan tanggal)
+            // Objek data pesanan baru memakai tanggal pilihan user
             const newOrder = {
                 id: newId,
-                date: today, // <--- Kolom tanggal baru
+                date: chosenDate, // <--- Menggunakan tanggal dari form
                 customer: customerName,
                 type: channelType,
                 product: `${productName} (${qty}x)`,
@@ -207,23 +210,24 @@
             orders.push(newOrder);
             localStorage.setItem('sun_orders', JSON.stringify(orders));
 
-            // Reset Input Form & Refresh Tabel
+            // Reset Input Form (kecuali tanggal agar tidak perlu repot isi ulang jika ingin input banyak)
             document.getElementById('customer').value = '';
             document.getElementById('quantity').value = '1';
-            alert(`Sukses! Pesanan ${newId} berhasil dikirim tanggal ${today}.`);
+            
+            // Format tanggal untuk notifikasi alert (DD/MM/YYYY)
+            const alertDate = new Date(chosenDate).toLocaleDateString('id-ID');
+            alert(`Sukses! Pesanan ${newId} berhasil direkam untuk tanggal ${alertDate}.`);
             loadOrdersTable();
         });
 
-        // Fungsi bantu untuk meriset data simulasi
-        function clearOrders() {
-            if(confirm("Apakah Anda yakin ingin menyetel ulang data simulasi pesanan harian?")) {
-                localStorage.removeItem('sun_orders');
-                window.location.reload();
-            }
-        }
-
-        // Jalankan fungsi tampil tabel saat halaman pertama kali dimuat
-        window.onload = loadOrdersTable;
+        // Jalankan fungsi saat halaman pertama kali dimuat
+        window.onload = function() {
+            // Otomatis set input tanggal ke tanggal hari ini (2026-06-26) agar user tidak kosong saat pertama buka
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('orderDate').value = today;
+            
+            loadOrdersTable();
+        };
     </script>
 </body>
 </html>
