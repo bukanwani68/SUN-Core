@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUN-Core - Modul Operasional Gudang</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex">
+
+    <aside class="w-64 bg-slate-800 border-r border-slate-700 flex flex-col justify-between shrink-0">
+        <div>
+            <div class="p-6 border-b border-slate-700 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xl shadow-md">SUN</div>
+                <div>
+                    <h2 class="font-bold tracking-tight text-sm">SUN-Core v1.0</h2>
+                    <p class="text-[11px] text-slate-400">PT SUN Distribution</p>
+                </div>
+            </div>
+            <nav class="p-4 space-y-1">
+                <div class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2">Menu Utama</div>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-emerald-600 text-white rounded-xl font-medium text-sm transition-all shadow-lg shadow-emerald-600/10">
+                    <i class="fa-solid fa-boxes-packing text-base text-emerald-200"></i> Antrean Delivery & Stok
+                </a>
+                <div class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-3 pt-4 mb-2">Akses Terbatas</div>
+                <p class="text-slate-500 text-xs px-3 italic"><i class="fa-solid fa-lock mr-1"></i> Modul lain dikunci untuk jabatan ini.</p>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-slate-700 bg-slate-850/50">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm border border-emerald-500/30">WH</div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-200">Warehouse Officer</p>
+                    <p class="text-[10px] text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Online</p>
+                </div>
+            </div>
+            <a href="index.html" class="w-full py-2 bg-slate-700 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-right-from-bracket text-[11px]"></i> Keluar Sistem
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-y-auto max-w-6xl mx-auto w-full">
+        <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight">Manajemen Operasional & Kontrol Fisik Gudang</h1>
+                <p class="text-slate-400 text-sm mt-0.5">Pemrosesan barang keluar berdasarkan dokumen OBD dan pencatatan stok fisik secara berkala.</p>
+            </div>
+            <div class="bg-slate-800 border border-slate-700 px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-slate-300 font-medium">Logika Integrasi: Modul SAP MM (Materials Management)</span>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-slate-800 border border-slate-700/60 p-4 rounded-xl shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Daging Sapi Slice</p>
+                    <p id="stock-daging" class="text-xl font-bold text-slate-100 mt-1">0 kg</p>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center text-slate-400"><i class="fa-solid fa-cow"></i></div>
+            </div>
+            <div class="bg-slate-800 border border-slate-700/60 p-4 rounded-xl shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Chicken Nugget Premium</p>
+                    <p id="stock-nugget" class="text-xl font-bold text-slate-100 mt-1">0 pack</p>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center text-slate-400"><i class="fa-solid fa-egg"></i></div>
+            </div>
+            <div class="bg-slate-800 border border-slate-700/60 p-4 rounded-xl shadow-sm flex items-center justify-between border-l-4 border-l-amber-500">
+                <div>
+                    <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Kentang Goreng Beku</p>
+                    <p id="stock-kentang" class="text-xl font-bold text-slate-100 mt-1">0 bag</p>
+                    <span class="text-[10px] text-amber-400 font-semibold mt-0.5 block"><i class="fa-solid fa-triangle-exclamation"></i> Menyentuh Batas Minimum!</span>
+                </div>
+                <div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400"><i class="fa-solid fa-bowl-food"></i></div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <section class="lg:col-span-2 bg-slate-800 border border-slate-700/60 p-6 rounded-2xl shadow-xl">
+                <h3 class="font-bold text-base border-b border-slate-700 pb-3 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-truck-loading text-emerald-400"></i> Antrean Outbound Delivery (OBD) Pendapatan
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="text-slate-400 border-b border-slate-700 bg-slate-900/30">
+                                <th class="p-3 font-semibold uppercase tracking-wider">ID Order</th>
+                                <th class="p-3 font-semibold uppercase tracking-wider">Pelanggan</th>
+                                <th class="p-3 font-semibold uppercase tracking-wider">Item & Kuantitas</th>
+                                <th class="p-3 font-semibold uppercase tracking-wider">Status</th>
+                                <th class="p-3 font-semibold uppercase tracking-wider text-center">Aksi Operasional</th>
+                            </tr>
+                        </thead>
+                        <tbody id="warehouseTableBody" class="divide-y divide-slate-700/40">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="lg:col-span-1 bg-slate-800 border border-slate-700/60 p-6 rounded-2xl shadow-xl h-fit">
+                <h3 class="font-bold text-base border-b border-slate-700 pb-3 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-check text-emerald-400"></i> Pencatatan Audit Fisik Bulanan
+                </h3>
+                <p class="text-slate-400 text-xs mb-4 leading-relaxed">Gunakan fitur ini untuk rekonsiliasi data jika ada produk rusak/mencair di dalam cold storage.</p>
+                <form id="cycleCountForm" class="space-y-4 text-sm">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Pilih Komoditas</label>
+                        <select id="countProductSelect" class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all cursor-pointer">
+                            <option value="daging">Daging Sapi Slice</option>
+                            <option value="nugget">Chicken Nugget Premium</option>
+                            <option value="kentang">Kentang Goreng Beku</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Jumlah Riil Hasil Hitung Fisik</label>
+                        <input type="number" id="physicalQty" min="0" required class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-emerald-500 transition-all" placeholder="Masukkan jumlah aktual">
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-600/10 active:scale-[0.98] transition-all cursor-pointer text-xs flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-rotate"></i> Sinkronisasi & Rekonsiliasi Sistem
+                    </button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Fungsi untuk menampilkan indikator live stok di atas halaman
+        function displayLiveStock() {
+            const stock = JSON.parse(localStorage.getItem('sun_stock'));
+            if (stock) {
+                document.getElementById('stock-daging').innerText = `${stock.daging.qty} ${stock.daging.unit}`;
+                document.getElementById('stock-nugget').innerText = `${stock.nugget.qty} ${stock.nugget.unit}`;
+                document.getElementById('stock-kentang').innerText = `${stock.kentang.qty} ${stock.kentang.unit}`;
+            }
+        }
+
+        // Fungsi memuat data antrean pesanan untuk diproses gudang
+        function loadWarehouseTable() {
+            const tableBody = document.getElementById('warehouseTableBody');
+            tableBody.innerHTML = '';
+            
+            const orders = JSON.parse(localStorage.getItem('sun_orders')) || [];
+            
+            // Filter pesanan yang belum selesai penuh (Menunggu Gudang atau Dalam Pengiriman)
+            const pendingOrders = orders.filter(o => o.status !== "Selesai");
+
+            if (pendingOrders.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500 italic">Tidak ada antrean pengiriman barang keluar saat ini.</td></tr>`;
+                return;
+            }
+
+            pendingOrders.forEach(order => {
+                let actionButton = '';
+                let statusBadge = '';
+
+                if (order.status === "Menunggu Gudang") {
+                    statusBadge = `<span class="px-2 py-0.5 bg-blue-500/10 text-blue-400 rounded-md border border-blue-500/10 font-medium">Ready to Pick</span>`;
+                    actionButton = `<button onclick="processPGI('${order.id}')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg text-[11px] cursor-pointer transition-colors shadow-md shadow-emerald-600/10"><i class="fa-solid fa-boxes-packing mr-1"></i> Konfirmasi PGI</button>`;
+                } else if (order.status === "Dalam Pengiriman") {
+                    statusBadge = `<span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 rounded-md border border-amber-500/10 font-medium">In Transit</span>`;
+                    actionButton = `<button onclick="confirmPOD('${order.id}')" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg text-[11px] cursor-pointer transition-colors shadow-md shadow-blue-600/10"><i class="fa-solid fa-signature mr-1"></i> Selesaikan POD</button>`;
+                }
+
+                tableBody.innerHTML += `
+                    <tr class="hover:bg-slate-700/30 transition-colors">
+                        <td class="p-3 font-mono font-bold text-slate-300">${order.id}</td>
+                        <td class="p-3 font-semibold text-slate-200">${order.customer}</td>
+                        <td class="p-3 text-slate-400">${order.product}</td>
+                        <td class="p-3">${statusBadge}</td>
+                        <td class="p-3 text-center">${actionButton}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Fungsi untuk eksekusi PGI (Post Goods Issue) - Memotong Stok Digital
+        function processPGI(orderId) {
+            const orders = JSON.parse(localStorage.getItem('sun_orders')) || [];
+            const stock = JSON.parse(localStorage.getItem('sun_stock'));
+            
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex > -1) {
+                const order = orders[orderIndex];
+                const productKey = order.productKey;
+                
+                // Validasi kecukupan kuantitas stok di gudang
+                if (stock[productKey].qty < order.qty) {
+                    alert(`Gagal PGI! Stok fisik ${stock[productKey].name} tidak mencukupi di cold storage. Silakan hubungi bagian pengadaan.`);
+                    return;
+                }
+
+                // Potong kuantitas stok di sistem database gudang
+                stock[productKey].qty -= order.qty;
+                // Ubah status alur proses demand-to-cash menjadi dalam pengiriman oleh kurir
+                orders[orderIndex].status = "Dalam Pengiriman";
+
+                // Simpan kembali perubahan ke penyimpanan lokal
+                localStorage.setItem('sun_stock', JSON.stringify(stock));
+                localStorage.setItem('sun_orders', JSON.stringify(orders));
+
+                alert(`PGI Berhasil untuk ${orderId}! Stok otomatis terpotong di sistem. Barang siap dibawa kurir.`);
+                displayLiveStock();
+                loadWarehouseTable();
+            }
+        }
+
+        // Fungsi simulasi pengunggahan dokumen bukti serah terima oleh kurir (Proof of Delivery / POD)
+        function confirmPOD(orderId) {
+            const orders = JSON.parse(localStorage.getItem('sun_orders')) || [];
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            
+            if (orderIndex > -1) {
+                // Ubah status akhir menjadi Selesai (Memasuki Aliran Akuntansi / Keuangan)
+                orders[orderIndex].status = "Selesai";
+                localStorage.setItem('sun_orders', JSON.stringify(orders));
+                
+                alert(`Dokumen POD Terverifikasi! Pesanan ${orderId} telah sampai di tujuan. Dokumen siap dicatat sebagai Piutang/Kas oleh tim Keuangan.`);
+                loadWarehouseTable();
+            }
+        }
+
+        // Fungsi sinkronisasi audit fisik (Cycle Count)
+        document.getElementById('cycleCountForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const productKey = document.getElementById('countProductSelect').value;
+            const physicalQty = parseInt(document.getElementById('physicalQty').value);
+            
+            const stock = JSON.parse(localStorage.getItem('sun_stock'));
+            if (stock) {
+                stock[productKey].qty = physicalQty;
+                localStorage.setItem('sun_stock', JSON.stringify(stock));
+                alert(`Sukses melakukan audit! Data sistem berhasil disesuaikan dengan stok fisik riil.`);
+                document.getElementById('physicalQty').value = '';
+                displayLiveStock();
+                loadWarehouseTable();
+            }
+        });
+
+        // Inisialisasi awal saat halaman dibuka
+        window.onload = function() {
+            displayLiveStock();
+            loadWarehouseTable();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUN-Core - Modul Pengadaan (Procurement)</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex">
+
+    <aside class="w-64 bg-slate-800 border-r border-slate-700 flex flex-col justify-between shrink-0">
+        <div>
+            <div class="p-6 border-b border-slate-700 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xl shadow-md">SUN</div>
+                <div>
+                    <h2 class="font-bold tracking-tight text-sm">SUN-Core v1.0</h2>
+                    <p class="text-[11px] text-slate-400">PT SUN Distribution</p>
+                </div>
+            </div>
+            <nav class="p-4 space-y-1">
+                <div class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2">Menu Utama</div>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-purple-600 text-white rounded-xl font-medium text-sm transition-all shadow-lg shadow-purple-600/10">
+                    <i class="fa-solid fa-truck-ramp-box text-base text-purple-200"></i> Pengadaan & Restock
+                </a>
+                <div class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-3 pt-4 mb-2">Akses Terbatas</div>
+                <p class="text-slate-500 text-xs px-3 italic"><i class="fa-solid fa-lock mr-1"></i> Modul lain dikunci untuk jabatan ini.</p>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-slate-700 bg-slate-850/50">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm border border-purple-500/30">PO</div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-200">Procurement Officer</p>
+                    <p class="text-[10px] text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Online</p>
+                </div>
+            </div>
+            <a href="index.html" class="w-full py-2 bg-slate-700 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-right-from-bracket text-[11px]"></i> Keluar Sistem
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-y-auto max-w-6xl mx-auto w-full">
+        <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight">Sistem Pengadaan & Manajemen Pemasok</h1>
+                <p class="text-slate-400 text-sm mt-0.5">Pantau status persediaan kritis di gudang dan lakukan pemesanan kembali (*restock*) ke supplier.</p>
+            </div>
+            <div class="bg-slate-800 border border-slate-700 px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+                <span class="text-slate-300 font-medium">Logika Integrasi: Hubungan SAP MM (Purchasing) & WMS</span>
+            </div>
+        </header>
+
+        <section class="mb-8">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3"><i class="fa-solid fa-bell text-amber-500 mr-1"></i> Panel Kontrol Batas Minimum Inventaris</h3>
+            <div id="alertContainer" class="grid grid-cols-1 gap-3">
+                </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <section class="lg:col-span-1 bg-slate-800 border border-slate-700/60 p-6 rounded-2xl shadow-xl h-fit">
+                <h3 class="font-bold text-base border-b border-slate-700 pb-3 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-file-signature text-purple-400"></i> Buat Purchase Order (PO)
+                </h3>
+                <form id="poForm" class="space-y-4 text-sm">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Pilih Supplier Resmi</label>
+                        <select id="supplierSelect" class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-purple-500 transition-all cursor-pointer">
+                            <option value="PT Indo Meat Supplier">PT Indo Meat Supplier (Daging Sapi)</option>
+                            <option value="CV Nugget Berkah Utama">CV Nugget Berkah Utama (Chicken Nugget)</option>
+                            <option value="PT Agro Pangan Nusantara">PT Agro Pangan Nusantara (Kentang)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Komoditas Barang</label>
+                        <select id="poProductSelect" class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-purple-500 transition-all cursor-pointer">
+                            <option value="daging">Daging Sapi Slice (kg)</option>
+                            <option value="nugget">Chicken Nugget Premium (pack)</option>
+                            <option value="kentang">Kentang Goreng Beku (bag)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Jumlah Kuantitas Pembelian</label>
+                        <input type="number" id="poQty" min="10" required value="50" class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-purple-500 transition-all">
+                        <span class="text-[10px] text-slate-500 mt-1 block">*Minimal pembelian ulang ke supplier adalah 10 unit.</span>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-semibold rounded-xl shadow-lg shadow-purple-600/10 active:scale-[0.98] transition-all cursor-pointer mt-2 text-xs flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-cart-flatbed-suitcases"></i> Terbitkan PO & Kirim ke Supplier
+                    </button>
+                </form>
+            </section>
+
+            <section class="lg:col-span-2 bg-slate-800 border border-slate-700/60 p-6 rounded-2xl shadow-xl">
+                <h3 class="font-bold text-base border-b border-slate-700 pb-3 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-clock-rotate-left text-purple-400"></i> Riwayat PO & Simulasi Inbound Goods Receipt (GR)
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="text-slate-400 border-b border-slate-700 bg-slate-900/30">
+                                <th class="p-3 font-semibold uppercase tracking-wider">ID PO</th>
+                                <th class="p-3 font-semibold uppercase tracking-wider">Supplier</th>
+                                <th class="p-3 font-semibold uppercase tracking-wider">Item & Qty</th>
+                                <th class="p-3 font-semibold uppercase tracking-wider">Status PO</th>
+                                <th class="p-3 font-semibold uppercase tracking-wider text-center">Aksi Gudang Masuk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="poTableBody" class="divide-y divide-slate-700/40">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Cek kondisi stok di localStorage dan tampilkan alarm jika di bawah batas minimum
+        function checkStockAlerts() {
+            const stock = JSON.parse(localStorage.getItem('sun_stock'));
+            const alertContainer = document.getElementById('alertContainer');
+            alertContainer.innerHTML = '';
+
+            let hasAlert = false;
+
+            for (const key in stock) {
+                const item = stock[key];
+                if (item.qty <= item.min) {
+                    hasAlert = true;
+                    alertContainer.innerHTML += `
+                        <div class="flex items-center justify-between p-4 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-xl text-xs">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-sm"><i class="fa-solid fa-triangle-exclamation animate-bounce"></i></div>
+                                <div>
+                                    <p class="font-bold">STATUS KRITIS: Persediaan "${item.name}" Menipis</p>
+                                    <p class="text-slate-400 mt-0.5">Stok Saat Ini: <span class="font-bold text-slate-200">${item.qty} ${item.unit}</span> (Batas Aman Minimum: ${item.min} ${item.unit})</p>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-1 bg-amber-500 text-slate-950 font-bold rounded-lg uppercase tracking-wider text-[10px]">Butuh PO</span>
+                        </div>
+                    `;
+                }
+            }
+
+            if (!hasAlert) {
+                alertContainer.innerHTML = `
+                    <div class="flex items-center gap-3 p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-xs">
+                        <i class="fa-solid fa-circle-check text-base"></i>
+                        <p class="font-medium">Seluruh persediaan bahan baku di gudang cold storage berada di zona aman.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Memuat riwayat dokumen PO fiktif
+        function loadPOTable() {
+            const tableBody = document.getElementById('poTableBody');
+            tableBody.innerHTML = '';
+
+            // Ambil database PO dari localStorage atau buat baru jika kosong
+            const poList = JSON.parse(localStorage.getItem('sun_po_list')) || [
+                { id: "PO-2026-001", supplier: "PT Indo Meat Supplier", itemKey: "daging", itemName: "Daging Sapi Slice", qty: 100, status: "Sudah Diterima (GR)" }
+            ];
+            
+            // Simpan state awal jika baru pertama dibuka
+            if (!localStorage.getItem('sun_po_list')) {
+                localStorage.setItem('sun_po_list', JSON.stringify(poList));
+            }
+
+            poList.slice().reverse().forEach(po => {
+                let statusBadge = '';
+                let actionButton = '';
+
+                if (po.status === "Menunggu Dikirim Supplier") {
+                    statusBadge = `<span class="px-2 py-0.5 bg-purple-500/10 text-purple-400 rounded-md border border-purple-500/20 font-medium">In Progress</span>`;
+                    actionButton = `<button onclick="processGR('${po.id}')" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-semibold rounded-lg text-[11px] cursor-pointer transition-colors shadow-sm"><i class="fa-solid fa-circle-down mr-1"></i> Posting GR</button>`;
+                } else {
+                    statusBadge = `<span class="px-2 py-0.5 bg-slate-700 text-slate-400 rounded-md font-medium">Completed</span>`;
+                    actionButton = `<span class="text-slate-500 italic text-[11px]"><i class="fa-solid fa-check-double text-emerald-400 mr-1"></i> Stok Masuk Gudang</span>`;
+                }
+
+                tableBody.innerHTML += `
+                    <tr class="hover:bg-slate-700/30 transition-colors">
+                        <td class="p-3 font-mono font-bold text-slate-300">${po.id}</td>
+                        <td class="p-3 font-semibold text-slate-200">${po.supplier}</td>
+                        <td class="p-3 text-slate-400">${po.itemName} (${po.qty})</td>
+                        <td class="p-3">${statusBadge}</td>
+                        <td class="p-3 text-center">${actionButton}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Proses Submit Form Pembuatan PO Baru
+        document.getElementById('poForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const supplier = document.getElementById('supplierSelect').value;
+            const productSelect = document.getElementById('poProductSelect');
+            const itemKey = productSelect.value;
+            const itemName = productSelect.options[productSelect.selectedIndex].text.split(' (')[0];
+            const qty = parseInt(document.getElementById('poQty').value);
+
+            const poList = JSON.parse(localStorage.getItem('sun_po_list')) || [];
+            const newPoId = `PO-2026-${String(poList.length + 1).padStart(3, '0')}`;
+
+            const newPo = {
+                id: newPoId,
+                supplier: supplier,
+                itemKey: itemKey,
+                itemName: itemName,
+                qty: qty,
+                status: "Menunggu Dikirim Supplier"
+            };
+
+            poList.push(newPo);
+            localStorage.setItem('sun_po_list', JSON.stringify(poList));
+
+            alert(`Sukses menerbitkan dokumen ${newPoId}! Supplier akan segera mengirimkan komoditas.`);
+            checkStockAlerts();
+            loadPOTable();
+        });
+
+        // Proses Posting GR (Goods Receipt) - Menambahkan Stok Kembali ke Sistem Gudang
+        function processGR(poId) {
+            const poList = JSON.parse(localStorage.getItem('sun_po_list')) || [];
+            const stock = JSON.parse(localStorage.getItem('sun_stock'));
+
+            const poIndex = poList.findIndex(p => p.id === poId);
+            if (poIndex > -1) {
+                const po = poList[poIndex];
+                
+                // Tambahkan kuantitas ke database stok gudang
+                stock[po.itemKey].qty += po.qty;
+                // Update status dokumen PO
+                poList[poIndex].status = "Sudah Diterima (GR)";
+
+                // Simpan perubahan
+                localStorage.setItem('sun_stock', JSON.stringify(stock));
+                localStorage.setItem('sun_po_list', JSON.stringify(poList));
+
+                alert(`Goods Receipt (GR) Sukses! ${po.qty} unit dari ${poId} resmi ditambahkan ke inventaris fisik gudang.`);
+                checkStockAlerts();
+                loadPOTable();
+            }
+        }
+
+        // Jalankan saat pertama dimuat
+        window.onload = function() {
+            checkStockAlerts();
+            loadPOTable();
+        };
+    </script>
+</body>
+</html>

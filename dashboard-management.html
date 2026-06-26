@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUN-Core - Eksekutif Dasbor KPI Manajemen</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex">
+
+    <aside class="w-64 bg-slate-800 border-r border-slate-700 flex flex-col justify-between shrink-0">
+        <div>
+            <div class="p-6 border-b border-slate-700 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xl shadow-md">SUN</div>
+                <div>
+                    <h2 class="font-bold tracking-tight text-sm">SUN-Core v1.0</h2>
+                    <p class="text-[11px] text-slate-400">PT SUN Distribution</p>
+                </div>
+            </div>
+            <nav class="p-4 space-y-1">
+                <div class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2">Menu Eksekutif</div>
+                <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-amber-500 text-slate-950 rounded-xl font-bold text-sm transition-all shadow-lg shadow-amber-500/10">
+                    <i class="fa-solid fa-chart-pie text-base text-slate-950"></i> Ringkasan Eksekutif & KPI
+                </a>
+                <div class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-3 pt-4 mb-2">Akses Sistem Utama</div>
+                <p class="text-slate-400 text-xs px-3 leading-relaxed opacity-80"><i class="fa-solid fa-circle-nodes text-amber-400 mr-1"></i> Mode Pemantauan: Akses Penuh Lintas Departemen</p>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-slate-700 bg-slate-850/50">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm border border-amber-500/30">DIR</div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-200">Director / Owner</p>
+                    <p class="text-[10px] text-amber-400"><i class="fa-solid fa-crown text-[8px] mr-1"></i> Root Administrator</p>
+                </div>
+            </div>
+            <a href="index.html" class="w-full py-2 bg-slate-700 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-right-from-bracket text-[11px]"></i> Keluar Sistem
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-y-auto max-w-6xl mx-auto w-full">
+        <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight">Pusat Kendali Pengambilan Keputusan Bisnis</h1>
+                <p class="text-slate-400 text-sm mt-0.5">Analisis permintaan riil, efisiensi rantai pasok, dan visualisasi kinerja keuangan perusahaan secara terpusat.</p>
+            </div>
+            <div class="bg-slate-800 border border-slate-700 px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                <span class="text-slate-300 font-medium">Logika Integrasi: Ekosistem Penyelaras Aliran Informasi</span>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-slate-800 border border-slate-700/60 p-4 rounded-xl shadow-sm">
+                <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Total Omzet Pendapatan</p>
+                <p id="mgmtRevenue" class="text-xl font-bold text-slate-100 mt-1">Rp0</p>
+                <span class="text-[10px] text-blue-400 font-medium mt-1 block"><i class="fa-solid fa-chart-line"></i> Akumulasi Hulu ke Hilir</span>
+            </div>
+            <div class="bg-slate-800 border border-slate-700/60 p-4 rounded-xl shadow-sm">
+                <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Efisiensi Koleksi Kas</p>
+                <p id="mgmtCollection" class="text-xl font-bold text-emerald-400 mt-1">0%</p>
+                <span class="text-[10px] text-emerald-400 font-medium mt-1 block"><i class="fa-solid fa-clock"></i> Kecepatan Piutang Cair</span>
+            </div>
+            <div class="bg-slate-800 border border-slate-700/60 p-4 rounded-xl shadow-sm">
+                <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Akurasi Pengiriman (Service Level)</p>
+                <p class="text-xl font-bold text-indigo-400 mt-1">96.8%</p>
+                <span class="text-[10px] text-indigo-400 font-medium mt-1 block"><i class="fa-solid fa-truck-fast"></i> Berdasarkan Verifikasi POD</span>
+            </div>
+            <div class="bg-slate-800 border border-slate-700/60 p-4 rounded-xl shadow-sm">
+                <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Perputaran Stok Gudang</p>
+                <p class="text-xl font-bold text-amber-400 mt-1">12.4x / Bln</p>
+                <span class="text-[10px] text-amber-400 font-medium mt-1 block"><i class="fa-solid fa-rotate-left"></i> Tingkat Kesegaran Frozen Food</span>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div class="bg-slate-800 border border-slate-700/60 p-6 rounded-2xl shadow-xl">
+                <h3 class="font-bold text-sm border-b border-slate-700 pb-3 mb-4 text-slate-300">
+                    <i class="fa-solid fa-chart-pie text-amber-400 mr-1"></i> Analisis Segmentasi Saluran Permintaan (Kanal)
+                </h3>
+                <div class="relative h-64 flex justify-center items-center">
+                    <canvas id="channelChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 border border-slate-700/60 p-6 rounded-2xl shadow-xl">
+                <h3 class="font-bold text-sm border-b border-slate-700 pb-3 mb-4 text-slate-300">
+                    <i class="fa-solid fa-chart-column text-amber-400 mr-1"></i> Volume Permintaan Produk Frozen Food Harian (Unit)
+                </h3>
+                <div class="relative h-64 flex justify-center items-center">
+                    <canvas id="productChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-slate-800 border border-slate-700/60 p-6 rounded-2xl shadow-xl">
+            <h3 class="font-bold text-sm border-b border-slate-700 pb-3 mb-4 text-slate-300">
+                <i class="fa-solid fa-shield-halved text-amber-400 mr-1"></i> Sistem Audit Terintegrasi: Rekap Aliran Proses Bisnis
+            </h3>
+            <div class="overflow-x-auto text-xs">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-slate-400 border-b border-slate-700 bg-slate-900/30">
+                            <th class="p-3 font-semibold uppercase tracking-wider">ID Order</th>
+                            <th class="p-3 font-semibold uppercase tracking-wider">Pelanggan</th>
+                            <th class="p-3 font-semibold uppercase tracking-wider">Produk Terjual</th>
+                            <th class="p-3 font-semibold uppercase tracking-wider">Nilai Kotor</th>
+                            <th class="p-3 font-semibold uppercase tracking-wider">Aliran Status Sistem Internal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="managementTableBody" class="divide-y divide-slate-700/40">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function loadManagementDashboard() {
+            const tableBody = document.getElementById('managementTableBody');
+            tableBody.innerHTML = '';
+
+            const orders = JSON.parse(localStorage.getItem('sun_orders')) || [];
+            const clearedInvoices = JSON.parse(localStorage.getItem('sun_cleared_invoices')) || [];
+
+            let totalRevenue = 0;
+            let cashCollected = 0;
+
+            // Variabel Penghitung Data Grafik
+            let b2bCount = 0;
+            let b2cCount = 0;
+
+            let qtyDaging = 0;
+            let qtyNugget = 0;
+            let qtyKentang = 0;
+
+            orders.forEach(order => {
+                totalRevenue += order.total;
+
+                // Logika Kas Masuk & Perhitungan Klasifikasi Chart
+                if (order.type.includes("B2B")) {
+                    b2bCount += order.total;
+                    if (clearedInvoices.includes(order.id)) {
+                        cashCollected += order.total;
+                    }
+                } else {
+                    b2cCount += order.total;
+                    cashCollected += order.total; // B2C langsung terhitung kas masuk
+                }
+
+                // Kalkulasi Volume Produk
+                if (order.product.includes("Daging")) qtyDaging += order.qty || 1;
+                if (order.product.includes("Chicken")) qtyNugget += order.qty || 1;
+                if (order.product.includes("Kentang")) qtyKentang += order.qty || 1;
+
+                // Tentukan warna badge alur kerja
+                let workflowBadge = "";
+                if (order.status === "Selesai") {
+                    workflowBadge = `<span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-md font-bold text-[10px]"><i class="fa-solid fa-circle-check"></i> Selesai (Kas Diakui)</span>`;
+                } else if (order.status === "Dalam Pengiriman") {
+                    workflowBadge = `<span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-md font-bold text-[10px]"><i class="fa-solid fa-truck"></i> Logistik Terbit / PGI Sukses</span>`;
+                } else {
+                    workflowBadge = `<span class="px-2 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md font-bold text-[10px]"><i class="fa-solid fa-file-invoice"></i> Admin Terbit / Menunggu Gudang</span>`;
+                }
+
+                tableBody.innerHTML += `
+                    <tr class="hover:bg-slate-700/30 transition-colors">
+                        <td class="p-3 font-mono font-bold text-slate-300">${order.id}</td>
+                        <td class="p-3 font-semibold text-slate-200">${order.customer}</td>
+                        <td class="p-3 text-slate-400">${order.product}</td>
+                        <td class="p-3 font-medium text-slate-100">Rp${order.total.toLocaleString('id-ID')}</td>
+                        <td class="p-3">${workflowBadge}</td>
+                    </tr>
+                `;
+            });
+
+            // Hitung persentase Efisiensi Koleksi Kas
+            const collectionEfficiency = totalRevenue > 0 ? (cashCollected / totalRevenue) * 100 : 0;
+
+            // Render Angka ke UI Indikator Atas
+            document.getElementById('mgmtRevenue').innerText = `Rp${totalRevenue.toLocaleString('id-ID')}`;
+            document.getElementById('mgmtCollection').innerText = `${collectionEfficiency.toFixed(1)}%`;
+
+            // INGERASI GRAFIK 1: SEGMENTASI SALURAN PERMINTAAN (PIE CHART)
+            const ctxChannel = document.getElementById('channelChart').getContext('2d');
+            new Chart(ctxChannel, {
+                type: 'pie',
+                data: {
+                    labels: ['B2B (WhatsApp Mitra)', 'B2C (E-Commerce)'],
+                    datasets: [{
+                        data: [b2bCount, b2cCount],
+                        backgroundColor: ['#a855f7', '#06b6d4'],
+                        borderWidth: 1,
+                        borderColor: '#1e293b'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }, position: 'bottom' }
+                    }
+                }
+            });
+
+            // INTEGRASI GRAFIK 2: VOLUME PRODUK TERJUAL (BAR CHART)
+            const ctxProduct = document.getElementById('productChart').getContext('2d');
+            new Chart(ctxProduct, {
+                type: 'bar',
+                data: {
+                    labels: ['Daging Sapi Slice', 'Chicken Nugget', 'Kentang Goreng Beku'],
+                    datasets: [{
+                        label: 'Kuantitas Terjual',
+                        data: [qtyDaging, qtyNugget, qtyKentang],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { family: 'Inter' } } },
+                        y: { grid: { color: '#334155/30' }, ticks: { color: '#94a3b8', stepSize: 5 } }
+                    }
+                }
+            });
+        }
+
+        window.onload = loadManagementDashboard;
+    </script>
+</body>
+</html>
