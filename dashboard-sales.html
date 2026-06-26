@@ -111,6 +111,7 @@
                         <thead>
                             <tr class="text-slate-400 border-b border-slate-700 bg-slate-900/30">
                                 <th class="p-3 font-semibold uppercase tracking-wider">ID Order</th>
+                                <th class="p-3 font-semibold uppercase tracking-wider">Tgl Order</th> 
                                 <th class="p-3 font-semibold uppercase tracking-wider">Pelanggan</th>
                                 <th class="p-3 font-semibold uppercase tracking-wider">Kanal</th>
                                 <th class="p-3 font-semibold uppercase tracking-wider">Item / Jumlah</th>
@@ -151,9 +152,13 @@
                     ? `<span class="px-2 py-0.5 bg-purple-500/10 text-purple-400 rounded-md font-medium border border-purple-500/10">${order.type}</span>`
                     : `<span class="px-2 py-0.5 bg-cyan-500/10 text-cyan-400 rounded-md font-medium border border-cyan-500/10">${order.type}</span>`;
 
+                // Format tanggal agar lebih rapi (DD/MM/YYYY)
+                const formattedDate = order.date ? new Date(order.date).toLocaleDateString('id-ID', {day: '2-digit', month: '2-digit', year: 'numeric'}) : '-';
+
                 tableBody.innerHTML += `
                     <tr class="hover:bg-slate-700/30 transition-colors">
                         <td class="p-3 font-mono font-bold text-slate-300">${order.id}</td>
+                        <td class="p-3 text-slate-400 font-medium">${formattedDate}</td>
                         <td class="p-3 font-semibold">${order.customer}</td>
                         <td class="p-3">${channelBadge}</td>
                         <td class="p-3 text-slate-300">${order.product}</td>
@@ -179,21 +184,23 @@
 
             const orders = JSON.parse(localStorage.getItem('sun_orders')) || [];
             
-            // Generate ID Otomatis ala kode SAP ERP
+            // Generate ID Otomatis
             const newId = `SO-2026-${String(orders.length + 1).padStart(3, '0')}`;
+            
+            // Mengambil tanggal hari ini secara otomatis (Format: YYYY-MM-DD)
             const today = new Date().toISOString().split('T')[0];
 
-            // Objek data pesanan baru
+            // Objek data pesanan baru (Sekarang menyertakan tanggal)
             const newOrder = {
                 id: newId,
+                date: today, // <--- Kolom tanggal baru
                 customer: customerName,
                 type: channelType,
                 product: `${productName} (${qty}x)`,
-                productKey: productKey, // Untuk acuan potong stok nanti
+                productKey: productKey,
                 qty: qty,
                 total: totalValue,
-                status: "Menunggu Gudang", // Status awal alur demand-to-cash
-                date: today
+                status: "Menunggu Gudang"
             };
 
             // Simpan ke database lokal terpusat
@@ -203,15 +210,14 @@
             // Reset Input Form & Refresh Tabel
             document.getElementById('customer').value = '';
             document.getElementById('quantity').value = '1';
-            alert(`Sukses! Pesanan ${newId} berhasil dikirim. Dokumen Outbound Delivery (OBD) otomatis diterbitkan untuk tim gudang.`);
+            alert(`Sukses! Pesanan ${newId} berhasil dikirim tanggal ${today}.`);
             loadOrdersTable();
         });
 
-        // Fungsi bantu untuk meriset data simulasi ke awal
+        // Fungsi bantu untuk meriset data simulasi
         function clearOrders() {
             if(confirm("Apakah Anda yakin ingin menyetel ulang data simulasi pesanan harian?")) {
                 localStorage.removeItem('sun_orders');
-                // Panggil ulang inisialisasi di index untuk memuat ulang data default
                 window.location.reload();
             }
         }
