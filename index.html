@@ -3,169 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUN-Core - Login Portal Internal</title>
+    <title>SUN-Core - Portal Integrasi Enterprise</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+        body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-900 min-h-screen flex flex-col justify-center items-center p-4">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="bg-slate-800 text-slate-100 p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700/50 transition-all duration-300">
-        
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-amber-500 text-slate-950 text-2xl font-black mb-3 shadow-lg shadow-amber-500/20">
-                SUN
-            </div>
-            <h1 class="text-2xl font-bold tracking-tight">SUN-Core Platform</h1>
-            <p class="text-slate-400 text-sm mt-1">Operations & Financial Integrated Hub</p>
-            <div class="mt-2 inline-block bg-slate-700/50 text-slate-300 text-xs px-2.5 py-1 rounded-full border border-slate-600/30">
-                <i class="fa-solid fa-lock text-amber-400 mr-1"></i> Portal Internal PT SUN Distribution
-            </div>
+    <div class="w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl p-8 md:p-12">
+        <div class="text-center max-w-xl mx-auto mb-10">
+            <div class="w-16 h-16 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-3xl shadow-xl mx-auto mb-4">SUN</div>
+            <h1 class="text-3xl font-extrabold tracking-tight">SUN-Core Integration Hub</h1>
+            <p class="text-slate-400 text-sm mt-2">Sistem ERP Terpadu PT SUN Distribution untuk Penyelarasan Aliran Operasional Hulu ke Hilir Bisnis Frozen Food.</p>
         </div>
 
-        <form id="loginForm" class="space-y-5">
-            <div>
-                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Username / Role ID</label>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-500">
-                        <i class="fa-solid fa-user text-sm"></i>
-                    </span>
-                    <input type="text" id="username" required 
-                        class="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-sm transition-all placeholder:text-slate-600" 
-                        placeholder="Masukkan ID Jabatan Anda">
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Password</label>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-500">
-                        <i class="fa-solid fa-key text-sm"></i>
-                    </span>
-                    <input type="password" id="password" required 
-                        class="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-sm transition-all placeholder:text-slate-600" 
-                        placeholder="••••••••">
-                </div>
-            </div>
-
-            <button type="submit" 
-                class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold rounded-xl shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20 active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer mt-2 text-sm">
-                Masuk Sistem <i class="fa-solid fa-arrow-right text-xs"></i>
-            </button>
-        </form>
-
-        <div class="relative my-6 text-center">
-            <span class="absolute inset-x-0 top-1/2 h-px bg-slate-700"></span>
-            <span class="relative bg-slate-800 px-3 text-xs text-slate-500 uppercase tracking-widest font-medium">Demo Quick Login</span>
+        <div class="bg-slate-800/50 border border-slate-700/50 p-6 rounded-2xl mb-8 text-center text-xs">
+            <span class="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full font-bold uppercase tracking-wider text-[10px] mb-2 inline-block"><i class="fa-solid fa-database mr-1"></i> Auto-Inject Mock Data Active</span>
+            <p class="text-slate-300">Sistem mendeteksi dan memuat otomatis 17+ item makanan beku dari katalog Excel serta data arsip transaksi mingguan/bulanan (Mei - Juni 2026).</p>
         </div>
 
-        <div class="grid grid-cols-2 gap-2 text-xs">
-            <button onclick="quickLogin('admin_sales', 'dashboard-sales.html')" 
-                class="p-2.5 bg-slate-900/40 hover:bg-slate-700/50 border border-slate-700/60 hover:border-slate-600 rounded-xl transition-all text-left flex items-center gap-2 cursor-pointer group">
-                <div class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-slate-950 transition-all"><i class="fa-solid fa-cart-shopping"></i></div>
-                <div>
-                    <p class="font-semibold text-slate-200">Sales Admin</p>
-                    <p class="text-[10px] text-slate-500">Input Order</p>
-                </div>
-            </button>
-
-            <button onclick="quickLogin('admin_warehouse', 'dashboard-warehouse.html')" 
-                class="p-2.5 bg-slate-900/40 hover:bg-slate-700/50 border border-slate-700/60 hover:border-slate-600 rounded-xl transition-all text-left flex items-center gap-2 cursor-pointer group">
-                <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all"><i class="fa-solid fa-warehouse"></i></div>
-                <div>
-                    <p class="font-semibold text-slate-200">Warehouse</p>
-                    <p class="text-[10px] text-slate-500">PGI & Stok</p>
-                </div>
-            </button>
-
-            <button onclick="quickLogin('admin_procurement', 'dashboard-procurement.html')" 
-                class="p-2.5 bg-slate-900/40 hover:bg-slate-700/50 border border-slate-700/60 hover:border-slate-600 rounded-xl transition-all text-left flex items-center gap-2 cursor-pointer group">
-                <div class="w-7 h-7 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center group-hover:bg-purple-500 group-hover:text-slate-950 transition-all"><i class="fa-solid fa-truck-ramp-box"></i></div>
-                <div>
-                    <p class="font-semibold text-slate-200">Procurement</p>
-                    <p class="text-[10px] text-slate-500">Beli Supplier</p>
-                </div>
-            </button>
-
-            <button onclick="quickLogin('admin_finance', 'dashboard-finance.html')" 
-                class="p-2.5 bg-slate-900/40 hover:bg-slate-700/50 border border-slate-700/60 hover:border-slate-600 rounded-xl transition-all text-left flex items-center gap-2 cursor-pointer group">
-                <div class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center group-hover:bg-rose-500 group-hover:text-slate-950 transition-all"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                <div>
-                    <p class="font-semibold text-slate-200">Finance</p>
-                    <p class="text-[10px] text-slate-500">Invoice & Cash</p>
-                </div>
-            </button>
-
-            <button onclick="quickLogin('director_sun', 'dashboard-management.html')" 
-                class="col-span-2 p-2.5 bg-slate-900/40 hover:bg-amber-500/10 border border-slate-700/60 hover:border-amber-500/30 rounded-xl transition-all text-center flex items-center justify-center gap-2 cursor-pointer group">
-                <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-slate-950 transition-all"><i class="fa-solid fa-chart-pie"></i></div>
-                <p class="font-semibold text-slate-200 group-hover:text-amber-400 transition-all">Direktur / Management (Dashboard KPI)</p>
-            </button>
+        <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4 text-center">Pilih Akses Role Modul</h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                <a href="dashboard-sales.html" class="p-4 bg-slate-800 hover:bg-blue-600/20 border border-slate-700 hover:border-blue-500 rounded-2xl text-center group transition-all">
+                    <i class="fa-solid fa-cash-register text-2xl text-blue-400 group-hover:scale-110 transition-transform mb-2 block"></i>
+                    <span class="text-xs font-semibold block text-slate-200">Sales Admin</span>
+                </a>
+                <a href="dashboard-warehouse.html" class="p-4 bg-slate-800 hover:bg-emerald-600/20 border border-slate-700 hover:border-emerald-500 rounded-2xl text-center group transition-all">
+                    <i class="fa-solid fa-warehouse text-2xl text-emerald-400 group-hover:scale-110 transition-transform mb-2 block"></i>
+                    <span class="text-xs font-semibold block text-slate-200">Warehouse</span>
+                </a>
+                <a href="dashboard-procurement.html" class="p-4 bg-slate-800 hover:bg-purple-600/20 border border-slate-700 hover:border-purple-500 rounded-2xl text-center group transition-all">
+                    <i class="fa-solid fa-truck-ramp-box text-2xl text-purple-400 group-hover:scale-110 transition-transform mb-2 block"></i>
+                    <span class="text-xs font-semibold block text-slate-200">Procurement</span>
+                </a>
+                <a href="dashboard-finance.html" class="p-4 bg-slate-800 hover:bg-rose-600/20 border border-slate-700 hover:border-rose-500 rounded-2xl text-center group transition-all">
+                    <i class="fa-solid fa-file-invoice-dollar text-2xl text-rose-400 group-hover:scale-110 transition-transform mb-2 block"></i>
+                    <span class="text-xs font-semibold block text-slate-200">Finance</span>
+                </a>
+                <a href="dashboard-management.html" class="col-span-2 md:col-span-1 p-4 bg-slate-800 hover:bg-amber-600/20 border border-slate-700 hover:border-amber-500 rounded-2xl text-center group transition-all">
+                    <i class="fa-solid fa-chart-pie text-2xl text-amber-400 group-hover:scale-110 transition-transform mb-2 block"></i>
+                    <span class="text-xs font-semibold block text-slate-200">Director</span>
+                </a>
+            </div>
         </div>
     </div>
 
-    <p class="text-slate-600 text-xs mt-8 font-medium">© 2026 PT Segar Utama Nusantara. Project EAS Digital Transformation.</p>
-
     <script>
-        // Data akun untuk simulasi login manual
-        const accounts = {
-            'admin_sales': 'dashboard-sales.html',
-            'admin_warehouse': 'dashboard-warehouse.html',
-            'admin_procurement': 'dashboard-procurement.html',
-            'admin_finance': 'dashboard-finance.html',
-            'director_sun': 'dashboard-management.html'
-        };
-
-        // Fungsi ketika form di-submit manual
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const user = document.getElementById('username').value.trim();
-            
-            if (accounts[user]) {
-                // Simpan session role yang aktif
-                sessionStorage.setItem('currentRole', user);
-                window.location.href = accounts[user];
-            } else {
-                alert('Username tidak terdaftar! Gunakan bantuan "Demo Quick Login" di bawah.');
-            }
-        });
-
-        // Fungsi klik otomatis quick login
-        function quickLogin(username, targetUrl) {
-            document.getElementById('username').value = username;
-            document.getElementById('password').value = 'password123';
-            
-            // Beri delay sedikit demi efek visual sebelum pindah halaman
-            setTimeout(() => {
-                sessionStorage.setItem('currentRole', username);
-                window.location.href = targetUrl;
-            }, 250);
-        }
-
-        // Inisialisasi basis data awal fiktif di localStorage jika belum ada
-        // Ini agar modul-modul lain langsung memiliki data awal saat pertama dibuka
-        if (!localStorage.getItem('sun_orders')) {
-            const initialOrders = [
-                { id: "SO-2026-001", customer: "Resto Padang Merdeka", type: "B2B (WhatsApp)", product: "Daging Sapi Slice 10kg", total: 1200000, status: "Selesai", date: "2026-06-23" },
-                { id: "SO-2026-002", customer: "Budi Santoso (Shopee)", type: "B2C (E-Commerce)", product: "Chicken Nugget Premium 1kg", total: 45000, status: "Dalam Pengiriman", date: "2026-06-24" },
-                { id: "SO-2026-003", customer: "Cafe Lawrence", type: "B2B (WhatsApp)", product: "Kentang Goreng Beku 20kg", total: 650000, status: "Menunggu Gudang", date: "2026-06-25" }
-            ];
-            localStorage.setItem('sun_orders', JSON.stringify(initialOrders));
-        }
-
-        if (!localStorage.getItem('sun_stock')) {
-            const initialStock = {
-                'daging': { name: 'Daging Sapi Slice', qty: 150, unit: 'kg', min: 50 },
-                'nugget': { name: 'Chicken Nugget Premium', qty: 300, unit: 'pack', min: 80 },
-                'kentang': { name: 'Kentang Goreng Beku', qty: 40, unit: 'bag', min: 60 } // Di bawah batas minimum
+        window.onload = function() {
+            // 1. DATABASE PRODUK BERDASARKAN GAMBAR EXCEL USER
+            const defaultStock = {
+                "nuggets": { id: "FF-001", name: "Chicken Nuggets (500g)", qty: 12, min: 15, unit: "pack", price: 35000, supplier: "Mitra Rasa Sentosa" },
+                "beef_patty": { id: "FF-002", name: "Beef Patty (10 pcs)", qty: 8, min: 10, unit: "pack", price: 55000, supplier: "Global Cold Chain" },
+                "fish_finger": { id: "FF-003", name: "Fish Finger (300g)", qty: 15, min: 10, unit: "pack", price: 28000, supplier: "PT Berkat Berkah Frozen" },
+                "french_fries": { id: "FF-004", name: "French Fries (1kg)", qty: 20, min: 15, unit: "bag", price: 42000, supplier: "Sumber Frozen Utama" },
+                "mix_veg": { id: "FF-005", name: "Mix Vegetable (500g)", qty: 25, min: 10, unit: "pack", price: 18000, supplier: "Mitra Rasa Sentosa" },
+                "sosis_sapi": { id: "FF-006", name: "Sosis Sapi (Pack)", qty: 10, min: 12, unit: "pack", price: 32000, supplier: "Distributor Beku Mandiri" },
+                "bakso_ayam": { id: "FF-007", name: "Bakso Ayam (50 pcs)", qty: 14, min: 10, unit: "pack", price: 25000, supplier: "Mitra Rasa Sentosa" },
+                "tempura_udang": { id: "FF-008", name: "Tempura Udang (250g)", qty: 5, min: 8, unit: "pack", price: 45000, supplier: "PT Berkat Berkah Frozen" },
+                "cumi_ring": { id: "FF-009", name: "Cumi Ring (300g)", qty: 12, min: 8, unit: "pack", price: 38000, supplier: "Sumber Frozen Utama" },
+                "pizza_frozen": { id: "FF-010", name: "Pizza Frozen (Pepperoni)", qty: 4, min: 5, unit: "box", price: 65000, supplier: "Global Cold Chain" },
+                "dimsum_ayam": { id: "FF-011", name: "Dimsum Ayam (10 pcs)", qty: 18, min: 12, unit: "pack", price: 30000, supplier: "PT Berkat Berkah Frozen" },
+                "siomay_ikan": { id: "FF-012", name: "Siomay Ikan (15 pcs)", qty: 20, min: 10, unit: "pack", price: 26000, supplier: "PT Berkat Berkah Frozen" },
+                "wagyu_patty": { id: "FF-013", name: "Wagyu Patty (2 pcs)", qty: 3, min: 5, unit: "pack", price: 95000, supplier: "Distributor Beku Mandiri" },
+                "jagung_pipil": { id: "FF-014", name: "Jagung Manis Pipil (500g)", qty: 30, min: 15, unit: "pack", price: 15000, supplier: "Tunas Pangan Abadi" },
+                "kacang_polong": { id: "FF-015", name: "Kacang Polong (500g)", qty: 28, min: 15, unit: "pack", price: 16000, supplier: "Sumber Frozen Utama" },
+                "spring_roll": { id: "FF-016", name: "Spring Roll (10 pcs)", qty: 15, min: 10, unit: "pack", price: 22000, supplier: "CV Pangan Jaya" },
+                "mozzarella": { id: "FF-017", name: "Keju Mozzarella Parut (200g)", qty: 10, min: 8, unit: "pack", price: 32000, supplier: "PT Berkat Berkah Frozen" }
             };
-            localStorage.setItem('sun_stock', JSON.stringify(initialStock));
-        }
+
+            if (!localStorage.getItem('sun_stock')) {
+                localStorage.setItem('sun_stock', JSON.stringify(defaultStock));
+            }
+
+            // 2. DATA ARSIP TRANSAKSI PALSU (MANDATORY DEMO BASELINE)
+            const mockOrders = [
+                // Arsip Bulan Lalu (Mei 2026)
+                { id: "SO-2026-001", date: "2026-05-10", customer: "Resto Golden Wings", type: "B2B (WhatsApp Mitra)", product: "Chicken Noodles (500g) (20x)", productKey: "nuggets", qty: 20, total: 700000, status: "Selesai" },
+                { id: "SO-2026-002", date: "2026-05-18", customer: "Andi Saputra", type: "B2C (E-Commerce)", product: "Pizza Frozen (Pepperoni) (2x)", productKey: "pizza_frozen", qty: 2, total: 130000, status: "Selesai" },
+                { id: "SO-2026-003", date: "2026-05-25", customer: "Hotel Sentosa", type: "B2B (WhatsApp Mitra)", product: "French Fries (1kg) (15x)", productKey: "french_fries", qty: 15, total: 630000, status: "Selesai" },
+                
+                // Arsip Bulan Ini - Minggu Lalu (Awal-Pertengahan Juni 2026)
+                { id: "SO-2026-004", date: "2026-06-05", customer: "Budi Retailer", type: "B2C (E-Commerce)", product: "Sosis Sapi (Pack) (5x)", productKey: "sosis_sapi", qty: 5, total: 160000, status: "Selesai" },
+                { id: "SO-2026-005", date: "2026-06-12", customer: "Cafe Nusantara", type: "B2B (WhatsApp Mitra)", product: "Dimsum Ayam (10 pcs) (10x)", productKey: "dimsum_ayam", qty: 10, total: 300000, status: "Selesai" },
+                { id: "SO-2026-006", date: "2026-06-15", customer: "Siti Aminah", type: "B2C (E-Commerce)", product: "Bakso Ayam (50 pcs) (3x)", productKey: "bakso_ayam", qty: 3, total: 75000, status: "Selesai" },
+                
+                // Arsip Minggu Ini (7 Hari Terakhir dari tanggal berjalan sekarang)
+                { id: "SO-2026-002", date: "2026-06-23", customer: "Warteg Eksklusif", type: "B2B (WhatsApp Mitra)", product: "Beef Patty (10 pcs) (6x)", productKey: "beef_patty", qty: 6, total: 330000, status: "Selesai" },
+                { id: "SO-2026-008", date: "2026-06-25", customer: "Catering Berkah", type: "B2B (WhatsApp Mitra)", product: "Tempura Udang (250g) (4x)", productKey: "tempura_udang", qty: 4, total: 180000, status: "Selesai" },
+                { id: "SO-2026-009", date: "2026-06-26", customer: "Rian Kuliner", type: "B2C (E-Commerce)", product: "Cumi Ring (300g) (2x)", productKey: "cumi_ring", qty: 2, total: 76000, status: "Selesai" },
+                { id: "SO-2026-010", date: "2026-06-27", customer: "Depot Makan Joyo", type: "B2B (WhatsApp Mitra)", product: "French Fries (1kg) (10x)", productKey: "french_fries", qty: 10, total: 420000, status: "Dalam Pengiriman" }
+            ];
+
+            if (!localStorage.getItem('sun_orders')) {
+                localStorage.setItem('sun_orders', JSON.stringify(mockOrders));
+                
+                // Set beberapa invoice B2B lama sebagai lunas
+                const clearedInvoices = ["SO-2026-001", "SO-2026-003", "SO-2026-005", "SO-2026-007"];
+                localStorage.setItem('sun_cleared_invoices', JSON.stringify(clearedInvoices));
+            }
+        };
     </script>
 </body>
 </html>

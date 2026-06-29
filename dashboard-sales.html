@@ -75,18 +75,15 @@
                     <div>
                         <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Saluran Permintaan (Kanal)</label>
                         <select id="channelType" class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-blue-500 transition-all cursor-pointer">
-                            <option value="B2B (WhatsApp)">B2B (WhatsApp - Invoice Tempo 30 Hari)</option>
+                            <option value="B2B (WhatsApp Mitra)">B2B (WhatsApp - Invoice Tempo 30 Hari)</option>
                             <option value="B2C (E-Commerce)">B2C (Shopee/Tokopedia - Bayar Langsung)</option>
                         </select>
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Pilih Produk Makanan Beku</label>
-                        <select id="productSelect" class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-blue-500 transition-all cursor-pointer">
-                            <option value="daging" data-price="120000">Daging Sapi Slice (Rp120.000 / kg)</option>
-                            <option value="nugget" data-price="45000">Chicken Nugget Premium (Rp45.000 / pack)</option>
-                            <option value="kentang" data-price="32500">Kentang Goreng Beku (Rp32.500 / bag)</option>
-                        </select>
+                        <select id="productSelect" required class="w-full px-3 py-2.5 bg-slate-900/60 border border-slate-700 rounded-xl focus:outline-none focus:border-blue-500 transition-all text-slate-200 cursor-pointer">
+                            </select>
                     </div>
 
                     <div>
@@ -132,7 +129,26 @@
     </main>
 
     <script>
-        // Fungsi untuk me-render data tabel dari localStorage
+        // Fungsi untuk merender pilihan produk di FORM secara dinamis dari data sun_stock
+        function loadProductOptions() {
+            const productSelect = document.getElementById('productSelect');
+            productSelect.innerHTML = '';
+
+            // Ambil database stok produk terpusat yang di-inject oleh index.html
+            const stockData = JSON.parse(localStorage.getItem('sun_stock')) || {};
+
+            // Render isi database menjadi baris pilihan form option
+            for (const key in stockData) {
+                const prod = stockData[key];
+                productSelect.innerHTML += `
+                    <option value="${key}" data-price="${prod.price}">
+                        [${prod.id}] ${prod.name} - Rp${prod.price.toLocaleString('id-ID')}
+                    </option>
+                `;
+            }
+        }
+
+        // Fungsi untuk me-render data tabel riwayat penjualan dari localStorage
         function loadOrdersTable() {
             const tableBody = document.getElementById('orderTableBody');
             tableBody.innerHTML = '';
@@ -141,7 +157,7 @@
             const orders = JSON.parse(localStorage.getItem('sun_orders')) || [];
             
             if(orders.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-500 italic">Belum ada pesanan yang di-input hari ini.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500 italic">Belum ada pesanan yang direkam.</td></tr>`;
                 return;
             }
 
@@ -165,7 +181,7 @@
                         <td class="p-3 text-slate-400 font-medium">${formattedDate}</td>
                         <td class="p-3 font-semibold">${order.customer}</td>
                         <td class="p-3">${channelBadge}</td>
-                        <td class="p-3 text-slate-300">${order.product}</td>
+                        <td class="p-3 text-slate-300 text-[11px]">${order.product}</td>
                         <td class="p-3 font-medium text-slate-100">Rp${order.total.toLocaleString('id-ID')}</td>
                         <td class="p-3"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${badgeColor}">${order.status}</span></td>
                     </tr>
@@ -177,26 +193,27 @@
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Ambil tanggal langsung dari input form
             const chosenDate = document.getElementById('orderDate').value;
             const customerName = document.getElementById('customer').value.trim();
             const channelType = document.getElementById('channelType').value;
             const productSelect = document.getElementById('productSelect');
             const productKey = productSelect.value;
-            const productName = productSelect.options[productSelect.selectedIndex].text.split(' (')[0];
+            
+            // Mengambil teks asli produk (sebelum tanda ' - ' harga)
+            const productName = productSelect.options[productSelect.selectedIndex].text.split(' - ')[0];
             const price = parseInt(productSelect.options[productSelect.selectedIndex].getAttribute('data-price'));
             const qty = parseInt(document.getElementById('quantity').value);
             const totalValue = price * qty;
 
             const orders = JSON.parse(localStorage.getItem('sun_orders')) || [];
             
-            // Generate ID Otomatis
+            // Generate ID Otomatis melanjutkan urutan baris data dummy
             const newId = `SO-2026-${String(orders.length + 1).padStart(3, '0')}`;
 
             // Objek data pesanan baru memakai tanggal pilihan user
             const newOrder = {
                 id: newId,
-                date: chosenDate, // <--- Menggunakan tanggal dari form
+                date: chosenDate,
                 customer: customerName,
                 type: channelType,
                 product: `${productName} (${qty}x)`,
@@ -210,7 +227,7 @@
             orders.push(newOrder);
             localStorage.setItem('sun_orders', JSON.stringify(orders));
 
-            // Reset Input Form (kecuali tanggal agar tidak perlu repot isi ulang jika ingin input banyak)
+            // Reset Input Form (kecuali tanggal)
             document.getElementById('customer').value = '';
             document.getElementById('quantity').value = '1';
             
@@ -220,13 +237,23 @@
             loadOrdersTable();
         });
 
+        // Fungsi bantu untuk meriset data simulasi
+        function clearOrders() {
+            if(confirm("Apakah Anda yakin ingin menyetel ulang semua simulasi data pesanan harian?")) {
+                localStorage.removeItem('sun_orders');
+                localStorage.removeItem('sun_cleared_invoices');
+                window.location.reload();
+            }
+        }
+
         // Jalankan fungsi saat halaman pertama kali dimuat
         window.onload = function() {
-            // Otomatis set input tanggal ke tanggal hari ini (2026-06-26) agar user tidak kosong saat pertama buka
+            // Otomatis set input tanggal ke tanggal hari ini (2026-06-28)
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('orderDate').value = today;
             
-            loadOrdersTable();
+            loadProductOptions(); // Muat 17 menu produk dari data gambar Excel
+            loadOrdersTable();    // Muat riwayat transaksi bawaan (SO-001 s/d SO-010)
         };
     </script>
 </body>
